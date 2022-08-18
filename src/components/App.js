@@ -1,12 +1,18 @@
 import React, { useReducer } from 'react';
 import { reducer, initialState } from '../reducers/index'
 import './App.css';
-import * as action from '../actions/index'
+import { addOne } from '../actions/index'
 import TotalDisplay from './TotalDisplay';
 import CalcButton from './CalcButton';
 
+
 function App() {
 const [state, dispatch] = useReducer(reducer, initialState)
+
+const onClick = () => {
+  const action = addOne()
+  dispatch(action)
+}
 
   return (
     <div className="App">
@@ -18,10 +24,10 @@ const [state, dispatch] = useReducer(reducer, initialState)
         <div className="col-md-12 d-flex justify-content-center">
           <form name="Cal">
             
-            <TotalDisplay value={0}/>
+            <TotalDisplay value={state.total}/>
             <div className="row details">
-              <span id="operation"><b>Operation:</b> X</span>
-              <span id="memory"><b>Memory:</b> 0</span>
+              <span id="operation"><b>Operation:</b> {state.operation}</span>
+              <span id="memory"><b>Memory:</b> {state.memory}</span>
             </div>
             
             <div className="row">
@@ -31,7 +37,7 @@ const [state, dispatch] = useReducer(reducer, initialState)
             </div>
 
             <div className="row">
-              <CalcButton value={1}/>
+              <CalcButton value={1} onClick={onClick}/>
               <CalcButton value={2}/>
               <CalcButton value={3}/>
             </div>
